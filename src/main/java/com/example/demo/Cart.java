@@ -19,7 +19,6 @@ public class Cart
     @Column(name = "cart_id")
     private long id;
 
-
     @OneToMany(mappedBy = "cart")
     private Set<Item> items;
 

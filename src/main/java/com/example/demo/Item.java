@@ -21,9 +21,8 @@ public class Item
 	@Column(name="item_name")
 	private String itemName;
 
-
     @ManyToOne
-    @JoinColumn(name = "cart_id", nullable = false)
+    @JoinColumn(name = "cart_id", nullable=false)
     private Cart cart;
 
     public Item() {
@@ -40,14 +39,6 @@ public class Item
     public void setCart(Cart cart) {
         this.cart = cart;
     }
-
-//    public long getCartId() {
-//		return cartId;
-//	}
-//
-//	public void setCartId(long cartId) {
-//		this.cartId = cartId;
-//	}
 
 	public long getId() {
         return id;

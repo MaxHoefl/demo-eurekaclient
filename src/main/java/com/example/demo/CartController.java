@@ -36,25 +36,31 @@ public class CartController
 	}
 	
 	@PostMapping("carts/rdm/{id}")
-	public Cart addRandomItem(@PathVariable("id") long id)
-	{
-		String[] rdmItemNames = {"toothbrush", "shampoo", "body wash"};
-		
-		Cart cart = dao.getById(id);
-		Item item = new Item();
-		int rnd = new Random().nextInt(rdmItemNames.length);
-		String itemName = rdmItemNames[rnd];
-		LOG.debug("Adding item: {}", itemName);
-		
-		item.setItemName(rdmItemNames[rnd]);
-//		Cart sameCart = new Cart();
-//		sameCart.setId(cart.getId());
-//		item.setCart(sameCart);
-		item.setCart(cart);
-		
-		cart.getItems().add(item);
-		return dao.save(cart);
-	}
+    public Cart addRandomItem(@PathVariable("id") long id)
+    {
+        String[] rdmItemNames = {"toothbrush", "shampoo", "body wash"};
+        int rnd = new Random().nextInt(rdmItemNames.length);
+        String itemName = rdmItemNames[rnd];
+        LOG.debug("Adding item {}", itemName);
+        
+        // Add new item to the cart with given id
+        Cart cart = dao.getById(id);
+
+        Item item = new Item();
+        item.setItemName(itemName);
+
+        // This works but I have to create a new cart object with same id
+        Cart sameCart = new Cart();
+        sameCart.setId(cart.getId());
+        item.setCart(sameCart);
+
+        // This doesn't work, no surprise but I would like to
+        // just retrieve the Cart, add the new Item and be done.
+        // item.setCart(cart);
+        
+        cart.getItems().add(item);
+        return dao.save(cart);
+    }
 	
 	@PostMapping("carts/items")
 	public Cart addItemToCart(@RequestBody Item item)

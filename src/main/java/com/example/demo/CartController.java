@@ -45,20 +45,23 @@ public class CartController
         
         // Add new item to the cart with given id
         Cart cart = dao.getById(id);
-
+        LOG.info("Cart {}: Item count: {}", cart.getId(), cart.getItems().size());
+        
         Item item = new Item();
         item.setItemName(itemName);
 
         // This works but I have to create a new cart object with same id
-        Cart sameCart = new Cart();
-        sameCart.setId(cart.getId());
-        item.setCart(sameCart);
+//        Cart sameCart = new Cart();
+//        sameCart.setId(cart.getId());
+//        item.setCart(sameCart);
 
         // This doesn't work, no surprise but I would like to
-        // just retrieve the Cart, add the new Item and be done.
-        // item.setCart(cart);
+         //just retrieve the Cart, add the new Item and be done.
+         item.setCart(cart);
         
         cart.getItems().add(item);
+        LOG.info("Cart item count: {}", cart.getItems().size());
+        
         return dao.save(cart);
     }
 	

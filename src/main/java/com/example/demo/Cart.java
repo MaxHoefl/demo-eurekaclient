@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.Column;
@@ -11,16 +12,16 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="CART")
+@Table(name="carts")
 public class Cart 
 {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "cart_id")
     private long id;
 
     @OneToMany(mappedBy = "cart")
-    private Set<Item> items;
+    private List<Item> items;
 
     public long getId() {
         return id;
@@ -31,11 +32,16 @@ public class Cart
     }
 
 
-    public Set<Item> getItems() {
+    public List<Item> getItems() {
         return items;
     }
 
-    public void setItems(Set<Item> items) {
+    public void setItems(List<Item> items) {
         this.items = items;
     }
+
+	@Override
+	public String toString() {
+		return "Cart [cart_id=" + id + ", items=" + items + "]";
+	}
 }

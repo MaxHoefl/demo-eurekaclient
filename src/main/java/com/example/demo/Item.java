@@ -5,17 +5,22 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Inheritance;
+import javax.persistence.InheritanceType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 @Entity
-@Table(name="ITEMS")
+@Table(name="items")
+@Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
 public class Item
 {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "item_id")
     private long id;
 	
 	@Column(name="item_name")
@@ -23,6 +28,7 @@ public class Item
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable=false)
+    @JsonBackReference
     private Cart cart;
 
     public Item() {
@@ -54,5 +60,10 @@ public class Item
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	@Override
+	public String toString() {
+		return "Item [item_id=" + id + ", itemName=" + itemName + ", cart_id=" + cart.getId() + "]";
 	}
 }

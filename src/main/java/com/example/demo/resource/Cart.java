@@ -1,6 +1,7 @@
 package com.example.demo.resource;
 
 import java.util.List;
+import java.util.Set;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -10,8 +11,15 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 @Entity
 @Table(name="carts")
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Cart 
 {
 	@Id
@@ -20,8 +28,11 @@ public class Cart
     private long id;
 
     @OneToMany(mappedBy = "cart")
-    private List<Item> items;
+    @JsonBackReference
+    private Set<Item> items;
 
+    public Cart() {}
+    
     public long getId() {
         return id;
     }
@@ -30,12 +41,11 @@ public class Cart
         this.id = id;
     }
 
-
-    public List<Item> getItems() {
+    public Set<Item> getItems() {
         return items;
     }
 
-    public void setItems(List<Item> items) {
+    public void setItems(Set<Item> items) {
         this.items = items;
     }
 

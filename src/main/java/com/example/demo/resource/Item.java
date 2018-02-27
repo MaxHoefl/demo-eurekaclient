@@ -11,11 +11,16 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="items")
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
+@JsonIdentityInfo(
+		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+		  property = "id")
 public class Item
 {
 	@Id
@@ -28,31 +33,19 @@ public class Item
 
     @ManyToOne
     @JoinColumn(name = "cart_id", nullable=false)
-    @JsonBackReference
+    @JsonManagedReference
     private Cart cart;
 
     public Item() {
     }
 
-    public Item(Cart c) {
-        this.cart = c;
-    }
-
-    public Cart getCart() {
-        return cart;
-    }
-
-    public void setCart(Cart cart) {
-        this.cart = cart;
-    }
-
 	public long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(long id) {
-        this.id = id;
-    }
+	public void setId(long id) {
+		this.id = id;
+	}
 
 	public String getItemName() {
 		return itemName;
@@ -60,6 +53,14 @@ public class Item
 
 	public void setItemName(String itemName) {
 		this.itemName = itemName;
+	}
+
+	public Cart getCart() {
+		return cart;
+	}
+
+	public void setCart(Cart cart) {
+		this.cart = cart;
 	}
 
 	@Override

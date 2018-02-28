@@ -13,22 +13,26 @@ import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="carts")
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+//@JsonIdentityInfo(
+//		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+//		  property = "id")
 public class Cart 
 {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "cart_id")
+    @Column(name = "cartid", nullable=false)
     private long id;
-
+	
+	@Column(name="items")
     @OneToMany(mappedBy = "cart")
-    @JsonBackReference
+	//@JsonManagedReference
+	@JsonIgnoreProperties("items")
     private Set<Item> items;
 
     public Cart() {}

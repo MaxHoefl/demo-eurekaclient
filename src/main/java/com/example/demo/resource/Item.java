@@ -11,29 +11,32 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name="items")
 @Inheritance(strategy=InheritanceType.TABLE_PER_CLASS)
-@JsonIdentityInfo(
-		  generator = ObjectIdGenerators.PropertyGenerator.class, 
-		  property = "id")
+//@JsonIdentityInfo(
+//		  generator = ObjectIdGenerators.PropertyGenerator.class, 
+//		  property = "id")
 public class Item
 {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "item_id")
+    @Column(name = "itemid", nullable=false)
     private long id;
 	
-	@Column(name="item_name")
+	@Column(name="itemname")
 	private String itemName;
 
     @ManyToOne
-    @JoinColumn(name = "cart_id", nullable=false)
-    @JsonManagedReference
+    @JoinColumn(name = "cartid", nullable=false)
+    //@JsonBackReference
+    @JsonIgnoreProperties("cart")
     private Cart cart;
 
     public Item() {
@@ -63,8 +66,12 @@ public class Item
 		this.cart = cart;
 	}
 
-	@Override
-	public String toString() {
-		return "Item [item_id=" + id + ", itemName=" + itemName + ", cart_id=" + cart.getId() + "]";
-	}
+//	@Override
+//	public String toString() {
+//		return "Item [item_id=" + id + ", itemName=" + itemName + ", cart_id=" + cart.getId() + "]";
+//	}
+//	@Override
+//	public String toString() {
+//		return "Item [item_id=" + id + ", itemName=" + itemName + "]";
+//	}
 }

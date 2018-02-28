@@ -6,13 +6,13 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 
+import com.example.demo.dao.CartDao;
+
 @SpringBootApplication
-//@Configuration
-//@ComponentScan
-//@EnableAutoConfiguration
-public class TestApplication 
+@ComponentScan(basePackages = {"com.example"})
+public class TestDemoApplication 
 {
 	public static void main(String[] args) {
-		SpringApplication.run(TestApplication.class, args);
+		SpringApplication.run(TestDemoApplication.class, args);
 	}
 }

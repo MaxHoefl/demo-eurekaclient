@@ -3,6 +3,8 @@ package com.example.demo;
 import static org.junit.Assert.*;
 
 import java.io.IOException;
+import java.util.HashSet;
+import java.util.stream.Collectors;
 
 import org.junit.After;
 import org.junit.Before;
@@ -31,22 +33,26 @@ public class Test_Item {
 	@Test
 	public void testSerializationOfItemAndCart() throws IOException
 	{
-		Cart cart = new Cart();
-		cart.setId(1);
-		
 		Item item = new Item();
 		item.setId(1);
 		item.setItemName("tooth brush");
-		item.setCart(cart);
+		item.setCart(null);
 		
-		LOG.info("Original item : {}", item.toString());
+		Cart cart = new Cart();
+		cart.setId(1);
+		cart.setItems(new HashSet<>());
+		cart.getItems().add(item);
+		
+		LOG.info("Original cart : {}, {}", cart.getId(), cart.getItems().stream().map(i -> i.getItemName()).collect(Collectors.toList()));
 		
 		ObjectMapper mapper = new ObjectMapper();
-		String payload = mapper.writeValueAsString(item);
-		LOG.info("Payload: {}", payload);
+		String payload = mapper.writeValueAsString(cart);
+		LOG.info("Cart Payload: {}", payload);
 		
-		Item itemCopy = mapper.readValue(payload, Item.class);
-		LOG.info("Reconstructed query : {}", itemCopy.toString());
+		Cart cartCopy = mapper.readValue(payload, Cart.class);
+		LOG.info("Reconstructed cart : {}, {}",cartCopy.getId(), cartCopy.getItems().stream().map(i -> i.getItemName()).collect(Collectors.toList()));
+		
+		
 	}
 
 }

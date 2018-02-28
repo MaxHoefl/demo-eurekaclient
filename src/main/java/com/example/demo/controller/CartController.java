@@ -3,6 +3,7 @@ package com.example.demo.controller;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -37,6 +38,27 @@ public class CartController
 	public Cart addCart(@RequestBody Cart cart)
 	{
 		return dao.save(cart);
+	}
+	
+	@GetMapping("carts/{cartId}")
+	public Cart getById(@PathVariable("cartId") long cartId)
+	{
+		return dao.getById(cartId);
+	}
+	
+	@PostMapping("carts/{cartId}")
+	public Cart addItemToCart(@PathVariable("cartId") long cartId, @RequestBody Item item)
+	{
+		LOG.info("Trying to add ITEM: id={}, name={}, cart={} to CART: {}", item.getId(), item.getItemName(), item.getCart(), cartId);
+		Cart cart = dao.getById(cartId);
+		LOG.info("CART: id={}, items={}", cart.getId(),cart.getItems().stream().map(i -> i.getItemName()).collect(Collectors.toList()));
+		cart.getItems().add(item);
+		LOG.info("CART: id={}, items={}", cart.getId(),cart.getItems().stream().map(i -> i.getItemName()).collect(Collectors.toList()));
+		Cart res = dao.save(cart);
+		LOG.info("CART: id={}, items={}", res.getId(),res.getItems().stream().map(i -> i.getItemName()).collect(Collectors.toList()));
+		Cart resCheck = dao.getById(res.getId());
+		LOG.info("CART: id={}, items={}", resCheck.getId(),resCheck.getItems().stream().map(i -> i.getItemName()).collect(Collectors.toList()));
+		return res;
 	}
 	
 	@PostMapping("carts/rdm/{id}")

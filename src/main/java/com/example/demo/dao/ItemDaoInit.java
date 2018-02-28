@@ -11,27 +11,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
+import com.example.demo.ExcludeFromTests;
 import com.example.demo.resource.Item;
 
 @Component
+@ExcludeFromTests
 public class ItemDaoInit 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(ItemDaoInit.class);
 	
-	public ItemDaoInit(@Autowired ItemDao dao, @Value("${sample.file}") String sampleFilePath)
+	public ItemDaoInit(@Autowired ItemDao dao)
 	{
-		LOG.info("-------- {}", sampleFilePath);
 		init(dao);
-		
-		ClassLoader classLoader = getClass().getClassLoader();
-		try {
-			File file = new File(classLoader.getResource(sampleFilePath).getFile()); 
-		}
-		catch(Exception e)
-		{
-			LOG.error("Cannot find file {}", sampleFilePath);
-			throw e;
-		}
 	}
 	
 	private void init(ItemDao dao)

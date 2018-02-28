@@ -22,7 +22,7 @@ public class ItemService
 		dao.findAll().forEach(new Consumer<Item>() {
 			@Override
 			public void accept(Item t) {
-				LOG.info(" ----------------------------- {}",t.toString());
+				LOG.info(" ----------------------------- ITEM: {}, {}",t.getId(),t.getItemName());
 			}
 		});
 	}

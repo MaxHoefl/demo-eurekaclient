@@ -36,6 +36,7 @@ public class ItemController
 	@PostMapping("items")
 	public Item addItem(@RequestBody Item item)
 	{
+		LOG.info("Trying to add item {}", item.toString());
 		return dao.save(item);
 	}
 	
@@ -43,7 +44,7 @@ public class ItemController
 	public Item getItemById(@PathVariable("item_id") long item_id)
 	{
 		Item item = dao.findById(item_id).get();
-		LOG.info(" ---------------- Retrieved item: {}", item.toString());
+		LOG.info(" ---------------- Retrieved item: ID: {}, NAME: {}, CART: {}", item.getId(), item.getItemName(), item.getCart().getId());
 		return item;
 	}
 }

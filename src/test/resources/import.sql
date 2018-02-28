@@ -9,11 +9,8 @@
 --); 
 
 INSERT INTO carts (cartid) VALUES (1);
-INSERT INTO carts (cartid) VALUES (2);
-INSERT INTO carts (cartid) VALUES (3);
 	
 INSERT INTO items (itemid, cartid, itemname) VALUES (1, 1, 'tooth brush');
 INSERT INTO items (itemid, cartid, itemname) VALUES (2, 1, 'shampoo');
-INSERT INTO items (itemid, cartid, itemname) VALUES (3, 2, 'body wash');
 	
 	

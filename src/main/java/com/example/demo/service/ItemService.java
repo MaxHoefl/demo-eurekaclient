@@ -12,7 +12,6 @@ import com.example.demo.dao.ItemDao;
 import com.example.demo.resource.Item;
 
 @Component
-@DependsOn("itemDaoInit")
 public class ItemService 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(ItemService.class);

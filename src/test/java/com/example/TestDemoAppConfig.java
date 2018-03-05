@@ -18,7 +18,7 @@ import com.example.demo.ExcludeFromTests;
 			   excludeFilters = @ComponentScan.Filter(type = FilterType.ANNOTATION, value = ExcludeFromTests.class))
 @EnableJpaRepositories("com.example.demo.dao")
 @EntityScan("com.example.demo.resource")
-@EnableAutoConfiguration
+//@EnableAutoConfiguration
 public class TestDemoAppConfig 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(TestDemoAppConfig.class);

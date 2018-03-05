@@ -6,6 +6,8 @@ import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.transaction.Transactional;
+
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -67,5 +69,51 @@ public class Test_ItemDao
 		
 		assertTrue("item milk not found in cart", items.stream().filter(i -> i.getItemName().equalsIgnoreCase("tooth brush")).count() == 1);
 		assertTrue("item toothbrush not found in cart", items.stream().filter(i -> i.getItemName().equalsIgnoreCase("shampoo")).count() == 1);
+	}
+	
+	@Test
+	@Transactional
+	public void testSaveNewItems()
+	{
+		List<Item> items = new ArrayList<>();
+		dao.findAll().forEach(items::add);
+		
+		for(Item i : items)
+		{
+			LOG.info("ITEM {}, {}", i.getId(), i.getItemName());
+		}
+		
+		Cart cart = new Cart();
+		cart.setId(1);
+		cart.setItems(new HashSet<>());
+		
+		Item item = new Item();
+		item.setCart(cart);
+		item.setItemName("toothbrush");
+		
+		Item item2 = new Item();
+		item2.setCart(cart);
+		item2.setItemName("milk");
+		
+		Item saved =null;
+		try
+		{
+			LOG.info("SAVING ITEM: {}, {}, {}", item.getId(), item.getItemName(), item.getCart().getId());
+			saved = dao.save(item);
+		}
+		catch(Exception e)
+		{
+			LOG.error("Cannot save item {}", saved,e);
+			fail();
+		}
+
+		items = new ArrayList<>();
+		dao.findAll().forEach(items::add);
+		
+		for(Item i : items)
+		{
+			LOG.info("ITEM {}, {}", i.getId(), i.getItemName());
+		}
+		
 	}
 }

@@ -43,6 +43,17 @@ public class CartController
 	@GetMapping("carts/{cartId}")
 	public Cart getById(@PathVariable("cartId") long cartId)
 	{
+		LOG.info("Cart service: Getting cart with id " + cartId);
+		
+		try {
+			LOG.info("sleeping...");
+			Thread.sleep(3_000);
+			LOG.info("woke up...");
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
 		return dao.getById(cartId);
 	}
 	

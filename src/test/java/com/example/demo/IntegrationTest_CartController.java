@@ -20,12 +20,13 @@ import org.springframework.test.context.TestPropertySource;
 import org.springframework.test.context.junit4.SpringRunner;
 
 import com.example.IntegrationTestApplication;
+import com.example.TestDemoAppConfig;
 import com.example.demo.controller.CartController;
 import com.example.demo.resource.Cart;
 
 @RunWith(SpringRunner.class)
 @ActiveProfiles("test")
-@SpringBootTest(classes=IntegrationTestApplication.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+@SpringBootTest(classes=TestDemoAppConfig.class, webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 public class IntegrationTest_CartController 
 {
 	private static final Logger LOG = LoggerFactory.getLogger(IntegrationTest_CartController.class);
@@ -50,5 +51,4 @@ public class IntegrationTest_CartController
 			LOG.info("CART {}, {}", c.getId(), c.getItems().stream().map(i -> i.getItemName()).collect(Collectors.toList()));
 		}
 	}
-
 }

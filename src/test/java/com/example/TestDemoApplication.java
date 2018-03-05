@@ -8,8 +8,8 @@ import org.springframework.context.annotation.Configuration;
 
 import com.example.demo.dao.CartDao;
 
-@SpringBootApplication
-@ComponentScan(basePackages = {"com.example"})
+//@SpringBootApplication
+//@ComponentScan(basePackages = {"com.example"})
 public class TestDemoApplication 
 {
 	public static void main(String[] args) {
